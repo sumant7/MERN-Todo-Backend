@@ -17,4 +17,4 @@ mongoose.connect(
   .then(()=>console.log("Connected to DB"))
   .catch(console.err)
 
-  app.listen(3001,()=> console.log("server"))
+  app.listen(process.env.PORT || 3001,()=>console.log("Server at 3001"));
