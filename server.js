@@ -15,6 +15,28 @@ mongoose.connect(
     }
   )
   .then(()=>console.log("Connected to DB"))
-  .catch(console.err)
+  .catch(console.err);
 
+  const Todo = require("./models/Todo");
+
+  app.get('/todos', async(req,res) => {
+    const todos = await Todo.find();
+    res.json(todos);
+  })
+
+
+  app.post('/todo/new', (req,res)=>{
+    const todo = new Todo({
+      text: req.body.text
+    });
+
+    todo.save();
+
+    res.json(todo)
+  })
+
+  app.delete('/todo/delete/:id', async(req,res)=>{
+    const result = await Todo.findByIdAndDelete(req.params.id);
+    res.json(result);
+  })
   app.listen(process.env.PORT || 3001,()=>console.log("Server at 3001"));
